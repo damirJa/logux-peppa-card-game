@@ -5,12 +5,12 @@ import { v4 as uuidv4 } from 'uuid';
 const $serverCards = map({});
 
 const INITIAL_CARDS = [
-  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=120&h=160&fit=crop', x: 50, y: 50, isFaceUp: false },
-  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=120&h=160&fit=crop', x: 200, y: 50, isFaceUp: false },
-  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=120&h=160&fit=crop', x: 350, y: 50, isFaceUp: false },
-  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=120&h=160&fit=crop', x: 50, y: 250, isFaceUp: false },
-  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=120&h=160&fit=crop', x: 200, y: 250, isFaceUp: false },
-  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=120&h=160&fit=crop', x: 350, y: 250, isFaceUp: false },
+  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=240&h=320&fit=crop', x: 50, y: 50, isFaceUp: false },
+  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=240&h=320&fit=crop', x: 200, y: 50, isFaceUp: false },
+  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=240&h=320&fit=crop', x: 350, y: 50, isFaceUp: false },
+  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=240&h=320&fit=crop', x: 50, y: 250, isFaceUp: false },
+  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=240&h=320&fit=crop', x: 200, y: 250, isFaceUp: false },
+  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=240&h=320&fit=crop', x: 350, y: 250, isFaceUp: false },
 ];
 
 const cardsMap = {};

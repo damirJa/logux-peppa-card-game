@@ -33,7 +33,7 @@ export const Card: React.FC<CardProps> = ({ card, onFlip, onMove }) => {
   });
 
   return (
-    <motion.div
+    <div
       ref={drag}
       style={{
         position: 'absolute',
@@ -43,24 +43,27 @@ export const Card: React.FC<CardProps> = ({ card, onFlip, onMove }) => {
         height: CARD_HEIGHT,
         cursor: isDragging ? 'grabbing' : 'grab',
         opacity: isDragging ? 0.5 : 1,
-      }}
-      animate={{
-        rotateY: card.isFaceUp ? 180 : 0,
-      }}
-      transition={{
-        duration: 0.6,
-        type: "spring",
-        stiffness: 200,
-        damping: 20
+        perspective: '1000px',
       }}
       onClick={() => onFlip({ cardId: card.id, isFaceUp: !card.isFaceUp })}
     >
-      <div style={{
-        position: 'relative',
-        width: '100%',
-        height: '100%',
-        transformStyle: 'preserve-3d'
-      }}>
+      <motion.div
+        style={{
+          position: 'relative',
+          width: '100%',
+          height: '100%',
+          transformStyle: 'preserve-3d',
+        }}
+        animate={{
+          rotateY: card.isFaceUp ? 180 : 0,
+        }}
+        transition={{
+          duration: 0.6,
+          type: "spring",
+          stiffness: 200,
+          damping: 20
+        }}
+      >
         <div
           style={{
             position: 'absolute',
@@ -90,7 +93,6 @@ export const Card: React.FC<CardProps> = ({ card, onFlip, onMove }) => {
             backfaceVisibility: 'hidden',
             transform: 'rotateY(180deg)',
             borderRadius: '8px',
-            border: '2px solid #e74c3c',
             overflow: 'hidden',
             boxShadow: '0 4px 8px rgba(0,0,0,0.3)',
           }}
@@ -105,7 +107,7 @@ export const Card: React.FC<CardProps> = ({ card, onFlip, onMove }) => {
             }}
           />
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 };
