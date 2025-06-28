@@ -1,14 +1,45 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { useDrop } from 'react-dnd';
 import { useStore } from '@nanostores/react';
 import { Card } from './Card';
 import { CustomDragLayer } from './CustomDragLayer';
 import { flipCard, moveCard } from '../logux';
 import { $cards } from '../stores/cards';
+import { 
+  calculateScaleFactor, 
+  prepareCardsWithScale, 
+  normalizeCoordinates,
+  DEFAULT_CANVAS_WIDTH 
+} from '../utils/canvas';
 
 export const Canvas: React.FC = () => {
   const cardsMap = useStore($cards);
   const cards = Object.values(cardsMap);
+  const [canvasWidth, setCanvasWidth] = useState(DEFAULT_CANVAS_WIDTH);
+  
+  const scaleFactor = useMemo(() => 
+    calculateScaleFactor(canvasWidth), 
+    [canvasWidth]
+  );
+  
+  const scaledCards = useMemo(() => 
+    prepareCardsWithScale(cards, scaleFactor), 
+    [cards, scaleFactor]
+  );
+  
+  useEffect(() => {
+    const updateCanvasWidth = () => {
+      const canvasElement = document.querySelector('[data-canvas]');
+      if (canvasElement) {
+        const rect = canvasElement.getBoundingClientRect();
+        setCanvasWidth(rect.width);
+      }
+    };
+    
+    updateCanvasWidth();
+    window.addEventListener('resize', updateCanvasWidth);
+    return () => window.removeEventListener('resize', updateCanvasWidth);
+  }, []);
   const [, drop] = useDrop({
     accept: 'card',
     drop: (item, monitor) => {
@@ -25,12 +56,16 @@ export const Canvas: React.FC = () => {
         // Calculate drop position relative to canvas
         const dropX = clientOffset.x - canvasRect.left;
         const dropY = clientOffset.y - canvasRect.top;
+        
+        // Normalize coordinates back to original scale for storage
+        const normalized = normalizeCoordinates(dropX, dropY, scaleFactor);
 
         return {
-          x: dropX,
-          y: dropY,
+          x: normalized.x,
+          y: normalized.y,
           offsetX,
-          offsetY
+          offsetY,
+          scaleFactor
         };
       }
       return {};
@@ -62,16 +97,17 @@ export const Canvas: React.FC = () => {
         data-canvas
         className='relative w-full h-full max-w-[860px] max-h-[820px]'>
         {/* Cards */}
-        {cards.map(card => (
+        {scaledCards.map(card => (
           <Card
             key={card.id}
             card={card}
             onFlip={handleFlip}
             onMove={handleMove}
+            scaleFactor={scaleFactor}
           />
         ))}
         {/* Custom drag layer for mobile preview */}
-        <CustomDragLayer />
+        <CustomDragLayer scaleFactor={scaleFactor} />
 
       </div>
 

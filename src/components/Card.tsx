@@ -3,14 +3,16 @@ import { motion } from 'motion/react';
 import { useDrag } from 'react-dnd';
 import { cn } from '../lib/utils';
 import type { Card as CardType } from '../types';
+import { normalizeCoordinates } from '../utils/canvas';
 
 interface CardProps {
-  card: CardType;
+  card: CardType & { scaledX?: number; scaledY?: number; scaledWidth?: number; scaledHeight?: number };
   onFlip: ({ cardId, isFaceUp }: { cardId: string; isFaceUp: boolean }) => void;
   onMove: ({ cardId, x, y }: { cardId: string, x: number, y: number }) => void;
+  scaleFactor: number;
 }
 
-export const Card: React.FC<CardProps> = ({ card, onFlip, onMove }) => {
+export const Card: React.FC<CardProps> = ({ card, onFlip, onMove, scaleFactor }) => {
   const [{ isDragging }, drag] = useDrag({
     type: 'card',
     item: () => {
@@ -24,11 +26,12 @@ export const Card: React.FC<CardProps> = ({ card, onFlip, onMove }) => {
       };
     },
     end: (item, monitor) => {
-      const dropResult = monitor.getDropResult<{ x: number; y: number; offsetX: number; offsetY: number }>();
+      const dropResult = monitor.getDropResult<{ x: number; y: number; offsetX: number; offsetY: number; scaleFactor: number }>();
       if (dropResult && monitor.didDrop() && dropResult.x !== undefined && dropResult.y !== undefined) {
-        const finalX = dropResult.x - (dropResult.offsetX || 0);
-        const finalY = dropResult.y - (dropResult.offsetY || 0);
-        console.log('Card dropped at:', finalX, finalY);
+        // The coordinates are already normalized in Canvas drop handler
+        const finalX = dropResult.x - (dropResult.offsetX || 0) / (dropResult.scaleFactor || 1);
+        const finalY = dropResult.y - (dropResult.offsetY || 0) / (dropResult.scaleFactor || 1);
+        console.log('Card dropped at (normalized):', finalX, finalY);
         onMove({ cardId: card.id, x: finalX, y: finalY });
       }
     },
@@ -41,12 +44,14 @@ export const Card: React.FC<CardProps> = ({ card, onFlip, onMove }) => {
     <div
       ref={drag}
       className={cn(
-        'absolute w-[120px] h-[160px]',
+        'absolute',
         isDragging ? 'cursor-grabbing opacity-50' : 'cursor-grab opacity-100'
       )}
       style={{
-        left: card.x,
-        top: card.y,
+        left: card.scaledX ?? card.x,
+        top: card.scaledY ?? card.y,
+        width: card.scaledWidth ?? 120,
+        height: card.scaledHeight ?? 160,
         perspective: '1000px',
       }}
       onClick={() => onFlip({ cardId: card.id, isFaceUp: !card.isFaceUp })}

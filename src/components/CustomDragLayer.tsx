@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDragLayer } from 'react-dnd';
 import type { Card as CardType } from '../types';
+import { DEFAULT_CARD_WIDTH, DEFAULT_CARD_HEIGHT } from '../utils/canvas';
 
 const layerStyles: React.CSSProperties = {
   position: 'fixed',
@@ -30,7 +31,11 @@ function getItemStyles(
   };
 }
 
-export const CustomDragLayer: React.FC = () => {
+interface CustomDragLayerProps {
+  scaleFactor: number;
+}
+
+export const CustomDragLayer: React.FC<CustomDragLayerProps> = ({ scaleFactor }) => {
   const {
     itemType,
     isDragging,
@@ -49,8 +54,16 @@ export const CustomDragLayer: React.FC = () => {
     switch (itemType) {
       case 'card':
         const card = item as CardType;
+        const scaledWidth = DEFAULT_CARD_WIDTH * scaleFactor;
+        const scaledHeight = DEFAULT_CARD_HEIGHT * scaleFactor;
         return (
-          <div className="w-[120px] h-[160px] rounded-lg overflow-hidden shadow-lg opacity-80">
+          <div 
+            className="rounded-lg overflow-hidden shadow-lg opacity-80"
+            style={{ 
+              width: scaledWidth, 
+              height: scaledHeight 
+            }}
+          >
             <img
               src={card.isFaceUp ? card.imgSrc : "/cover_image.jpg"}
               alt="Card preview"
