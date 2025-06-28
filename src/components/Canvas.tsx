@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDrop } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
 import { Card } from './Card';
 import type { Card as CardType } from '../types';
-import { client, flipCard, moveCard } from '../logux';
+import { flipCard, moveCard } from '../logux';
 
 const INITIAL_CARDS: CardType[] = [
   { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=120&h=160&fit=crop', x: 50, y: 50, isFaceUp: false },
@@ -15,41 +15,12 @@ const INITIAL_CARDS: CardType[] = [
 ];
 
 export const Canvas: React.FC = () => {
-  const [cards, setCards] = useState<CardType[]>(INITIAL_CARDS);
+  const [cards] = useState<CardType[]>(INITIAL_CARDS);
 
   const [, drop] = useDrop({
     accept: 'card',
     drop: () => ({}),
   });
-
-  // useEffect(() => {
-  //   const unsubscribe = client.log.on('add', (action, meta) => {
-  //     // Skip actions from the current client to avoid infinite loops
-  //     if (meta.id && meta.id.startsWith(client.clientId)) {
-  //       return;
-  //     }
-  //
-  //     if (action.type === 'card/flip') {
-  //       setCards(prevCards =>
-  //         prevCards.map(card =>
-  //           card.id === action.id
-  //             ? { ...card, isFaceUp: !card.isFaceUp }
-  //             : card
-  //         )
-  //       );
-  //     } else if (action.type === 'card/move') {
-  //       setCards(prevCards =>
-  //         prevCards.map(card =>
-  //           card.id === action.id
-  //             ? { ...card, x: action.x, y: action.y }
-  //             : card
-  //         )
-  //       );
-  //     }
-  //   });
-  //
-  //   return unsubscribe;
-  // }, []);
 
   const handleFlip = ({ cardId, isFaceUp }: { cardId: string; isFaceUp: boolean }) => {
     flipCard({ cardId, isFaceUp });

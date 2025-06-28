@@ -8,12 +8,10 @@ export const client = new CrossTabClient({
   prefix: 'loguxTEST',
   server: 'ws://localhost:31337',
   subprotocol: "1.0.0",
-  userId,  // TODO: We will fill it in Authentication recipe
-  token: ''  // TODO: We will fill it in Authentication recipe
+  userId,
 })
 
 export const flipCard = ({ cardId, isFaceUp }: { cardId: string; isFaceUp: boolean }) => {
-  console.log('client flip', cardId, isFaceUp);
   client.log.add({
     type: 'card/flip',
     cardId,
@@ -23,7 +21,14 @@ export const flipCard = ({ cardId, isFaceUp }: { cardId: string; isFaceUp: boole
 };
 
 export const moveCard = ({ cardId, x, y }: { cardId: string, x: number, y: number }) => {
-  console.log({ cardId, x, y })
+  client.log.add({
+    type: 'card/move',
+    cardId,
+    x,
+    y,
+    userId,
+  });
+
 };
 
 badge(client, { messages: badgeEn, styles: badgeStyles })
@@ -31,5 +36,4 @@ log(client)
 
 client.start();
 
-// Subscribe to global channel for real-time updates
-// client.log.add({ type: 'logux/subscribe', channel: 'global' });
+client.log.add({ type: 'logux/subscribe', channel: 'global' });

@@ -6,7 +6,7 @@ import type { Card as CardType } from '../types';
 interface CardProps {
   card: CardType;
   onFlip: ({ cardId, isFaceUp }: { cardId: string; isFaceUp: boolean }) => void;
-  onMove: (id: string, x: number, y: number) => void;
+  onMove: ({ cardId, x, y }: { cardId: string, x: number, y: number }) => void;
 }
 
 const CARD_WIDTH = 120;
@@ -23,7 +23,7 @@ export const Card: React.FC<CardProps> = ({ card, onFlip, onMove }) => {
         if (offset) {
           const newX = item.x + offset.x;
           const newY = item.y + offset.y;
-          onMove(card.id, newX, newY);
+          onMove({ cardId: card.id, x: newX, y: newY });
         }
       }
     },

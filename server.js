@@ -12,14 +12,15 @@ server.auth(async () => true);
 
 server.type('card/flip', {
   access: () => true,
-  process: (ctx, action, meta) => {
+  resend(ctx, action, meta) {
+    return `card/flip`
   },
 });
 
-server.type('card/move', {
-  access: () => true,
-  process: (ctx, action, meta) => {
-  },
-});
+// server.type('card/move', {
+//   access: () => true,
+//   process: (ctx, action, meta) => {
+//   },
+// });
 
 server.listen();
