@@ -13,7 +13,9 @@
   "dependencies": {
     "@logux/client": "^0.21.1",
     "@logux/server": "^0.13.1",
+    "@nanostores/react": "^1.0.0",
     "motion": "^12.19.1",
+    "nanostores": "^0.11.4",
     "prettier": "^3.6.2",
     "react": "^19.1.0",
     "react-dnd": "^16.0.1",
