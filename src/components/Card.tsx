@@ -66,21 +66,25 @@ export const Card: React.FC<CardProps> = ({ card, onFlip, onMove }) => {
       >
         {/* Card Back (Cover) */}
         <div
-          className="absolute w-full h-full bg-slate-700 rounded-lg border-2 border-slate-600 flex items-center justify-center text-white text-sm font-bold shadow-lg"
-          style={{
-            backfaceVisibility: 'hidden',
-            WebkitBackfaceVisibility: 'hidden',
-          }}
+          className="absolute backface-hidden w-full h-full rounded-lg overflow-hidden shadow-lg"
         >
-          Card Cover
+          <img
+            src="/cover_image.jpg"
+            alt="Card back"
+            className="w-full h-full object-cover"
+            draggable={false}
+          />
         </div>
 
         {/* Card Front (Image) */}
         <div
-          className="absolute w-full h-full rounded-lg overflow-hidden shadow-lg"
+          className={
+            cn(
+              "absolute transition-opacity backface-hidden w-full h-full rounded-lg overflow-hidden shadow-lg",
+              card.isFaceUp ? 'opacity-100' : 'opacity-0'
+            )
+          }
           style={{
-            backfaceVisibility: 'hidden',
-            WebkitBackfaceVisibility: 'hidden',
             transform: 'rotateY(180deg)',
           }}
         >
