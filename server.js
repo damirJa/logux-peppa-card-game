@@ -23,6 +23,8 @@ const server = new Server(
   Server.loadOptions(process, {
     subprotocol: '1.0.0',
     supports: '1.x',
+    host: '0.0.0.0',
+    port: 31337,
     fileUrl: import.meta.url
   })
 );

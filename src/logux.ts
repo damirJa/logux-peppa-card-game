@@ -8,7 +8,7 @@ const userId = uuidv4();
 
 export const client = new CrossTabClient({
   prefix: 'loguxTEST',
-  server: 'ws://localhost:31337',
+  server: 'ws://192.168.0.16:31337',
   subprotocol: "1.0.0",
   userId,
 })
