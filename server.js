@@ -67,7 +67,6 @@ server.type('card/move', {
     const { cardId, x, y } = action;
 
     if (currentCards[cardId]) {
-      // Update server state
       $serverCards.setKey(cardId, {
         ...currentCards[cardId],
         x,

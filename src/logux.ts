@@ -39,14 +39,13 @@ export const flipCard = ({ cardId, isFaceUp }: { cardId: string; isFaceUp: boole
 };
 
 export const moveCard = ({ cardId, x, y }: { cardId: string, x: number, y: number }) => {
-  console.log('card moved')
-  // client.log.add({
-  //   type: 'card/move',
-  //   cardId,
-  //   x,
-  //   y,
-  //   userId,
-  // });
+  client.log.add({
+    type: 'card/move',
+    cardId,
+    x,
+    y,
+    userId,
+  }, { sync: true });
 };
 
 badge(client, { messages: badgeEn, styles: badgeStyles })

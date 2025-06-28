@@ -15,16 +15,22 @@ const CARD_HEIGHT = 160;
 export const Card: React.FC<CardProps> = ({ card, onFlip, onMove }) => {
   const [{ isDragging }, drag] = useDrag({
     type: 'card',
-    item: { id: card.id, x: card.x, y: card.y },
+    item: () => {
+      // Get the initial offset when drag starts
+      return { 
+        id: card.id, 
+        x: card.x, 
+        y: card.y,
+      };
+    },
     end: (item, monitor) => {
-      const dropResult = monitor.getDropResult();
-      if (dropResult && monitor.didDrop()) {
-        const offset = monitor.getDifferenceFromInitialOffset();
-        if (offset) {
-          const newX = item.x + offset.x;
-          const newY = item.y + offset.y;
-          onMove({ cardId: card.id, x: newX, y: newY });
-        }
+      const dropResult = monitor.getDropResult<{ x: number; y: number; offsetX: number; offsetY: number }>();
+      if (dropResult && monitor.didDrop() && dropResult.x !== undefined && dropResult.y !== undefined) {
+        // Account for the initial grab offset
+        const finalX = dropResult.x - (dropResult.offsetX || 0);
+        const finalY = dropResult.y - (dropResult.offsetY || 0);
+        console.log('Card dropped at:', finalX, finalY);
+        onMove({ cardId: card.id, x: finalX, y: finalY });
       }
     },
     collect: (monitor) => ({

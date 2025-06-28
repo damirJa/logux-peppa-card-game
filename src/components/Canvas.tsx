@@ -10,7 +10,30 @@ export const Canvas: React.FC = () => {
   const cards = Object.values(cardsMap);
   const [, drop] = useDrop({
     accept: 'card',
-    drop: () => ({}),
+    drop: (item, monitor) => {
+      const clientOffset = monitor.getClientOffset();
+      const initialClientOffset = monitor.getInitialClientOffset();
+      const initialSourceClientOffset = monitor.getInitialSourceClientOffset();
+      const canvasRect = document.querySelector('[data-canvas]')?.getBoundingClientRect();
+      
+      if (clientOffset && initialClientOffset && initialSourceClientOffset && canvasRect) {
+        // Calculate the offset between mouse position and card's top-left corner when drag started
+        const offsetX = initialClientOffset.x - initialSourceClientOffset.x;
+        const offsetY = initialClientOffset.y - initialSourceClientOffset.y;
+        
+        // Calculate drop position relative to canvas
+        const dropX = clientOffset.x - canvasRect.left;
+        const dropY = clientOffset.y - canvasRect.top;
+        
+        return { 
+          x: dropX, 
+          y: dropY, 
+          offsetX, 
+          offsetY 
+        };
+      }
+      return {};
+    },
   });
 
   const handleFlip = ({ cardId, isFaceUp }: { cardId: string; isFaceUp: boolean }) => {
@@ -24,6 +47,7 @@ export const Canvas: React.FC = () => {
   return (
     <div
       ref={drop}
+      data-canvas
       style={{
         width: '100vw',
         height: '100vh',
