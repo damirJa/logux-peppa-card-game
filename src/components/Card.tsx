@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { useDrag } from 'react-dnd';
+import { cn } from '../lib/utils';
 import type { Card as CardType } from '../types';
 
 interface CardProps {
@@ -37,8 +38,10 @@ export const Card: React.FC<CardProps> = ({ card, onFlip, onMove }) => {
   return (
     <div
       ref={drag}
-      className={`absolute transition-all duration-300 w-[120px] h-[160px] ${isDragging ? 'cursor-grabbing opacity-50' : 'cursor-grab opacity-100'
-        }`}
+      className={cn(
+        'absolute transition-all duration-300 w-[120px] h-[160px]',
+        isDragging ? 'cursor-grabbing opacity-50' : 'cursor-grab opacity-100'
+      )}
       style={{
         left: card.x,
         top: card.y,
@@ -66,6 +69,7 @@ export const Card: React.FC<CardProps> = ({ card, onFlip, onMove }) => {
           className="absolute w-full h-full bg-slate-700 rounded-lg border-2 border-slate-600 flex items-center justify-center text-white text-sm font-bold shadow-lg"
           style={{
             backfaceVisibility: 'hidden',
+            WebkitBackfaceVisibility: 'hidden',
           }}
         >
           Card Cover
@@ -76,13 +80,18 @@ export const Card: React.FC<CardProps> = ({ card, onFlip, onMove }) => {
           className="absolute w-full h-full rounded-lg overflow-hidden shadow-lg"
           style={{
             backfaceVisibility: 'hidden',
+            WebkitBackfaceVisibility: 'hidden',
             transform: 'rotateY(180deg)',
           }}
         >
           <img
             src={card.imgSrc}
             alt={`Card ${card.id}`}
-            className="w-full h-full object-cover"
+            className={cn(
+              "w-full h-full object-cover",
+              isDragging && !card.isFaceUp && "invisible"
+            )}
+            draggable={false}
           />
         </div>
       </motion.div>

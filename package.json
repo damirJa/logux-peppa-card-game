@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "node --watch server.js & vite",
+    "dev": "node --watch server.js & vite --host",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
@@ -15,6 +15,7 @@
     "@logux/server": "^0.13.1",
     "@nanostores/react": "^1.0.0",
     "@tailwindcss/vite": "^4.1.11",
+    "clsx": "^2.1.1",
     "motion": "^12.19.1",
     "nanostores": "^0.11.4",
     "prettier": "^3.6.2",
@@ -22,6 +23,7 @@
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^19.1.0",
+    "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4.1.11",
     "uuid": "^11.1.0"
   },
