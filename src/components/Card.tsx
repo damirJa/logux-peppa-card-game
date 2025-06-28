@@ -14,11 +14,13 @@ export const Card: React.FC<CardProps> = ({ card, onFlip, onMove }) => {
   const [{ isDragging }, drag] = useDrag({
     type: 'card',
     item: () => {
-      // Get the initial offset when drag starts
+      // Pass full card data for preview
       return {
         id: card.id,
         x: card.x,
         y: card.y,
+        imgSrc: card.imgSrc,
+        isFaceUp: card.isFaceUp,
       };
     },
     end: (item, monitor) => {
@@ -39,7 +41,7 @@ export const Card: React.FC<CardProps> = ({ card, onFlip, onMove }) => {
     <div
       ref={drag}
       className={cn(
-        'absolute transition-all duration-300 w-[120px] h-[160px]',
+        'absolute w-[120px] h-[160px]',
         isDragging ? 'cursor-grabbing opacity-50' : 'cursor-grab opacity-100'
       )}
       style={{

@@ -2,6 +2,7 @@ import React from 'react';
 import { useDrop } from 'react-dnd';
 import { useStore } from '@nanostores/react';
 import { Card } from './Card';
+import { CustomDragLayer } from './CustomDragLayer';
 import { flipCard, moveCard } from '../logux';
 import { $cards } from '../stores/cards';
 
@@ -50,9 +51,7 @@ export const Canvas: React.FC = () => {
       data-canvas
       className="w-screen h-screen relative overflow-hidden bg-gradient-to-br from-pink-100 via-purple-50 to-indigo-100"
     >
-      {/* Decorative background elements */}
       <div className="absolute inset-0 opacity-40">
-        {/* Soft radial gradients for magical atmosphere */}
         <div className="absolute top-10 left-10 w-2/5 h-2/5 rounded-full bg-radial from-pink-200 from-30% to-transparent blur-xl"></div>
         <div className="absolute top-1/3 right-20 w-2/5 h-2/5 rounded-full bg-radial from-purple-200 from-25% to-transparent blur-2xl"></div>
         <div className="absolute bottom-1/4 left-1/4 w-2/5 h-2/5 rounded-full bg-radial from-indigo-200 from-35% to-transparent blur-xl"></div>
@@ -69,6 +68,9 @@ export const Canvas: React.FC = () => {
           onMove={handleMove}
         />
       ))}
+
+      {/* Custom drag layer for mobile preview */}
+      <CustomDragLayer />
     </div>
   );
 };

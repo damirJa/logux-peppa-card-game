@@ -4,9 +4,15 @@
 body {
   margin: 0;
   font-family: system-ui, -apple-system, sans-serif;
+  /* Prevent touch actions that might interfere with drag and drop */
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 #root {
   width: 100vw;
   height: 100vh;
+  /* Ensure touch events are properly handled */
+  touch-action: none;
 }
