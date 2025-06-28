@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useDrop } from 'react-dnd';
 import { useStore } from '@nanostores/react';
 import { Card } from './Card';
@@ -48,8 +48,7 @@ export const Canvas: React.FC = () => {
   return (
     <div
       ref={drop}
-      data-canvas
-      className="w-screen h-screen relative flex items-center justify-center overflow-hidden bg-gradient-to-br from-pink-100 via-purple-50 to-indigo-100"
+      className="w-screen h-screen px-4 relative flex items-center justify-center overflow-hidden bg-gradient-to-br from-pink-100 via-purple-50 to-indigo-100"
     >
       <div className="absolute inset-0 opacity-40">
         <div className="absolute top-10 left-10 w-2/5 h-2/5 rounded-full bg-radial from-pink-200 from-30% to-transparent blur-xl"></div>
@@ -59,7 +58,9 @@ export const Canvas: React.FC = () => {
         <div className="absolute top-1/2 left-1/2 w-2/5 h-2/5 rounded-full bg-radial-[at_30%_30%] from-white from-20% to-transparent blur-xl transform -translate-x-1/2 -translate-y-1/2"></div>
       </div>
 
-      <div className='relative w-full h-full max-w-[860px] max-h-[720px]'>
+      <div
+        data-canvas
+        className='relative w-full h-full max-w-[860px] max-h-[820px]'>
         {/* Cards */}
         {cards.map(card => (
           <Card
@@ -69,10 +70,11 @@ export const Canvas: React.FC = () => {
             onMove={handleMove}
           />
         ))}
+        {/* Custom drag layer for mobile preview */}
+        <CustomDragLayer />
+
       </div>
 
-      {/* Custom drag layer for mobile preview */}
-      <CustomDragLayer />
     </div>
   );
 };
