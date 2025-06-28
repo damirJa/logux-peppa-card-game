@@ -48,13 +48,7 @@ export const Canvas: React.FC = () => {
     <div
       ref={drop}
       data-canvas
-      style={{
-        width: '100vw',
-        height: '100vh',
-        backgroundColor: '#1a252f',
-        position: 'relative',
-        overflow: 'hidden',
-      }}
+      className="w-screen h-screen bg-slate-800 relative overflow-hidden"
     >
       {cards.map(card => (
         <Card

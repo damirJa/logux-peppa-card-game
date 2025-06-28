@@ -9,24 +9,20 @@ interface CardProps {
   onMove: ({ cardId, x, y }: { cardId: string, x: number, y: number }) => void;
 }
 
-const CARD_WIDTH = 120;
-const CARD_HEIGHT = 160;
-
 export const Card: React.FC<CardProps> = ({ card, onFlip, onMove }) => {
   const [{ isDragging }, drag] = useDrag({
     type: 'card',
     item: () => {
       // Get the initial offset when drag starts
-      return { 
-        id: card.id, 
-        x: card.x, 
+      return {
+        id: card.id,
+        x: card.x,
         y: card.y,
       };
     },
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult<{ x: number; y: number; offsetX: number; offsetY: number }>();
       if (dropResult && monitor.didDrop() && dropResult.x !== undefined && dropResult.y !== undefined) {
-        // Account for the initial grab offset
         const finalX = dropResult.x - (dropResult.offsetX || 0);
         const finalY = dropResult.y - (dropResult.offsetY || 0);
         console.log('Card dropped at:', finalX, finalY);
@@ -41,23 +37,18 @@ export const Card: React.FC<CardProps> = ({ card, onFlip, onMove }) => {
   return (
     <div
       ref={drag}
+      className={`absolute transition-all duration-300 w-[120px] h-[160px] ${isDragging ? 'cursor-grabbing opacity-50' : 'cursor-grab opacity-100'
+        }`}
       style={{
-        position: 'absolute',
         left: card.x,
         top: card.y,
-        width: CARD_WIDTH,
-        height: CARD_HEIGHT,
-        cursor: isDragging ? 'grabbing' : 'grab',
-        opacity: isDragging ? 0.5 : 1,
         perspective: '1000px',
       }}
       onClick={() => onFlip({ cardId: card.id, isFaceUp: !card.isFaceUp })}
     >
       <motion.div
+        className="relative w-full h-full"
         style={{
-          position: 'relative',
-          width: '100%',
-          height: '100%',
           transformStyle: 'preserve-3d',
         }}
         animate={{
@@ -70,47 +61,28 @@ export const Card: React.FC<CardProps> = ({ card, onFlip, onMove }) => {
           damping: 20
         }}
       >
+        {/* Card Back (Cover) */}
         <div
+          className="absolute w-full h-full bg-slate-700 rounded-lg border-2 border-slate-600 flex items-center justify-center text-white text-sm font-bold shadow-lg"
           style={{
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
             backfaceVisibility: 'hidden',
-            backgroundColor: '#2c3e50',
-            borderRadius: '8px',
-            border: '2px solid #34495e',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: 'white',
-            fontSize: '14px',
-            fontWeight: 'bold',
-            boxShadow: '0 4px 8px rgba(0,0,0,0.3)',
           }}
         >
           Card Cover
         </div>
 
+        {/* Card Front (Image) */}
         <div
+          className="absolute w-full h-full rounded-lg overflow-hidden shadow-lg"
           style={{
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
             backfaceVisibility: 'hidden',
             transform: 'rotateY(180deg)',
-            borderRadius: '8px',
-            overflow: 'hidden',
-            boxShadow: '0 4px 8px rgba(0,0,0,0.3)',
           }}
         >
           <img
             src={card.imgSrc}
             alt={`Card ${card.id}`}
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-            }}
+            className="w-full h-full object-cover"
           />
         </div>
       </motion.div>
