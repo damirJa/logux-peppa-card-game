@@ -2,31 +2,32 @@ import React, { useMemo, useState, useEffect } from 'react';
 import { useDrop } from 'react-dnd';
 import { useStore } from '@nanostores/react';
 import { Card } from './Card';
+import type { Card as CardType } from '../types';
 import { CustomDragLayer } from './CustomDragLayer';
 import { flipCard, moveCard } from '../logux';
 import { $cards } from '../stores/cards';
-import { 
-  calculateScaleFactor, 
-  prepareCardsWithScale, 
+import {
+  calculateScaleFactor,
+  prepareCardsWithScale,
   normalizeCoordinates,
-  DEFAULT_CANVAS_WIDTH 
+  DEFAULT_CANVAS_WIDTH
 } from '../utils/canvas';
 
 export const Canvas: React.FC = () => {
   const cardsMap = useStore($cards);
   const cards = Object.values(cardsMap);
   const [canvasWidth, setCanvasWidth] = useState(DEFAULT_CANVAS_WIDTH);
-  
-  const scaleFactor = useMemo(() => 
-    calculateScaleFactor(canvasWidth), 
+
+  const scaleFactor = useMemo(() =>
+    calculateScaleFactor(canvasWidth),
     [canvasWidth]
   );
-  
-  const scaledCards = useMemo(() => 
-    prepareCardsWithScale(cards, scaleFactor), 
+
+  const scaledCards = useMemo(() =>
+    prepareCardsWithScale(cards, scaleFactor),
     [cards, scaleFactor]
   );
-  
+
   useEffect(() => {
     const updateCanvasWidth = () => {
       const canvasElement = document.querySelector('[data-canvas]');
@@ -35,7 +36,7 @@ export const Canvas: React.FC = () => {
         setCanvasWidth(rect.width);
       }
     };
-    
+
     updateCanvasWidth();
     window.addEventListener('resize', updateCanvasWidth);
     return () => window.removeEventListener('resize', updateCanvasWidth);
@@ -56,7 +57,7 @@ export const Canvas: React.FC = () => {
         // Calculate drop position relative to canvas
         const dropX = clientOffset.x - canvasRect.left;
         const dropY = clientOffset.y - canvasRect.top;
-        
+
         // Normalize coordinates back to original scale for storage
         const normalized = normalizeCoordinates(dropX, dropY, scaleFactor);
 
@@ -72,8 +73,10 @@ export const Canvas: React.FC = () => {
     },
   });
 
-  const handleFlip = ({ cardId, isFaceUp }: { cardId: string; isFaceUp: boolean }) => {
-    flipCard({ cardId, isFaceUp });
+  const handleFlip = ({ id, isFaceUp, found }: CardType) => {
+    if (!found) {
+      flipCard({ cardId: id, isFaceUp });
+    }
   };
 
   const handleMove = ({ cardId, x, y }: { cardId: string, x: number, y: number }) => {

@@ -28,6 +28,15 @@ export const moveCard = (cardId: string, x: number, y: number) => {
   }
 };
 
+export const moveUpdateStore = (card: Card) => {
+  const currentCards = $cards.get();
+  if (currentCards[card.id]) {
+    $cards.setKey(card.id, {
+      ...card,
+    });
+  }
+}
+
 export const getCard = (cardId: string): Card | undefined => {
   return $cards.get()[cardId];
 };

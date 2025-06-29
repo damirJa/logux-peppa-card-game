@@ -1,14 +1,14 @@
 import { v4 as uuidv4 } from 'uuid';
 import { CrossTabClient, badge, badgeEn, log } from '@logux/client'
 import { badgeStyles } from '@logux/client/badge/styles'
-import { $cards, flipCard as flipCardStore, moveCard as moveCardStore } from './stores/cards';
-import type { Card, CardFlipAction, CardMoveAction, CardsLoadedAction } from './types';
+import { $cards, flipCard as flipCardStore, moveCard as moveCardStore, moveUpdateStore } from './stores/cards';
+import type { Card, CardFlipAction, CardMoveAction, CardsLoadedAction, CardUpdateAction } from './types';
 
 const userId = uuidv4();
 
 export const client = new CrossTabClient({
   prefix: 'loguxTEST',
-  server: 'ws://0.0.0.0:31337',
+  server: 'ws://192.168.0.16:31337',
   subprotocol: "1.0.0",
   userId,
 })
@@ -19,6 +19,10 @@ client.type<CardFlipAction>('card/flip', (action) => {
 
 client.type<CardMoveAction>('card/move', (action) => {
   moveCardStore(action.cardId, action.x, action.y);
+});
+
+client.type<CardUpdateAction>('card/update', (action) => {
+  moveUpdateStore(action.card);
 });
 
 client.type<CardsLoadedAction>('cards/loaded', (action) => {

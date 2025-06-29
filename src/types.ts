@@ -4,6 +4,8 @@ export interface Card {
   x: number;
   y: number;
   isFaceUp: boolean;
+  character: string;
+  found: boolean;
 }
 
 // Logux action types
@@ -19,6 +21,12 @@ export interface CardMoveAction {
   cardId: string;
   x: number;
   y: number;
+  userId: string;
+}
+
+export interface CardUpdateAction {
+  type: 'card/update';
+  card: Card;
   userId: string;
 }
 

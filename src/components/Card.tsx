@@ -3,11 +3,10 @@ import { motion } from 'motion/react';
 import { useDrag } from 'react-dnd';
 import { cn } from '../lib/utils';
 import type { Card as CardType } from '../types';
-import { normalizeCoordinates } from '../utils/canvas';
 
 interface CardProps {
   card: CardType & { scaledX?: number; scaledY?: number; scaledWidth?: number; scaledHeight?: number };
-  onFlip: ({ cardId, isFaceUp }: { cardId: string; isFaceUp: boolean }) => void;
+  onFlip: (card: CardType) => void;
   onMove: ({ cardId, x, y }: { cardId: string, x: number, y: number }) => void;
   scaleFactor: number;
 }
@@ -44,8 +43,9 @@ export const Card: React.FC<CardProps> = ({ card, onFlip, onMove, scaleFactor })
     <div
       ref={drag}
       className={cn(
-        'absolute',
-        isDragging ? 'cursor-grabbing opacity-50' : 'cursor-grab opacity-100'
+        'absolute rounded-lg overflow-hidden shadow-lg',
+        card.found && 'ring-3 ring-green-600/50',
+        isDragging ? 'cursor-grabbing opacity-50' : 'transition-all cursor-grab opacity-100'
       )}
       style={{
         left: card.scaledX ?? card.x,
@@ -54,7 +54,7 @@ export const Card: React.FC<CardProps> = ({ card, onFlip, onMove, scaleFactor })
         height: card.scaledHeight ?? 160,
         perspective: '1000px',
       }}
-      onClick={() => onFlip({ cardId: card.id, isFaceUp: !card.isFaceUp })}
+      onClick={() => onFlip({ ...card, isFaceUp: !card.isFaceUp })}
     >
       <motion.div
         className="relative w-full h-full"
@@ -73,7 +73,7 @@ export const Card: React.FC<CardProps> = ({ card, onFlip, onMove, scaleFactor })
       >
         {/* Card Back (Cover) */}
         <div
-          className="absolute backface-hidden w-full h-full rounded-lg overflow-hidden shadow-lg"
+          className="absolute backface-hidden w-full h-full "
         >
           <img
             src="/cover_image.jpg"
