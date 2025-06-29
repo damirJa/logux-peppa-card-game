@@ -3,6 +3,7 @@ import { CrossTabClient, badge, badgeEn, log } from '@logux/client'
 import { badgeStyles } from '@logux/client/badge/styles'
 import { $cards, flipCard as flipCardStore, moveCard as moveCardStore, moveUpdateStore } from './stores/cards';
 import type { Card, CardFlipAction, CardMoveAction, CardsLoadedAction, CardUpdateAction } from './types';
+import { playMatchSound } from './utils/sound';
 
 const userId = uuidv4();
 
@@ -31,6 +32,10 @@ client.type<CardsLoadedAction>('cards/loaded', (action) => {
     cardsMap[card.id] = card;
   });
   $cards.set(cardsMap);
+});
+
+client.type('cards/match', () => {
+  playMatchSound();
 });
 
 export const flipCard = ({ cardId, isFaceUp }: { cardId: string; isFaceUp: boolean }) => {

@@ -44,7 +44,7 @@ export const Card: React.FC<CardProps> = ({ card, onFlip, onMove, scaleFactor })
       ref={drag}
       className={cn(
         'absolute rounded-lg overflow-hidden shadow-lg',
-        card.found && 'ring-3 ring-green-600/50',
+        card.found && 'ring-3 ring-rose-400/30',
         isDragging ? 'cursor-grabbing opacity-50' : 'transition-all cursor-grab opacity-100'
       )}
       style={{

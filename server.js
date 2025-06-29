@@ -6,9 +6,9 @@ const $serverCards = map({});
 const $flippedCards = atom([]);
 
 const INITIAL_CARDS = [
-  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=120&h=160&fit=crop', x: 20, y: 20, isFaceUp: false, found: false, character: 'Peppa Pig' },
-  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=120&h=160&fit=crop', x: 164, y: 20, isFaceUp: false, found: false, character: 'George Pig' },
-  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=120&h=160&fit=crop', x: 308, y: 20, isFaceUp: false, found: false, character: 'Daddy Pig' },
+  { id: uuidv4(), imgSrc: '/peppa.png', x: 20, y: 20, isFaceUp: false, found: false, character: 'Peppa Pig' },
+  { id: uuidv4(), imgSrc: '/george.png', x: 164, y: 20, isFaceUp: false, found: false, character: 'George Pig' },
+  { id: uuidv4(), imgSrc: '/daddy.png', x: 308, y: 20, isFaceUp: false, found: false, character: 'Daddy Pig' },
   { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=120&h=160&fit=crop', x: 452, y: 20, isFaceUp: false, found: false, character: 'Mummy Pig' },
   { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=120&h=160&fit=crop', x: 596, y: 20, isFaceUp: false, found: false, character: 'Grandpa Pig' },
   { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=120&h=160&fit=crop', x: 740, y: 20, isFaceUp: false, found: false, character: 'Granny Pig' },
@@ -18,9 +18,9 @@ const INITIAL_CARDS = [
   { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=120&h=160&fit=crop', x: 452, y: 220, isFaceUp: false, found: false, character: 'Candy Cat' },
   { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=120&h=160&fit=crop', x: 596, y: 220, isFaceUp: false, found: false, character: 'Danny Dog' },
   { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=120&h=160&fit=crop', x: 740, y: 220, isFaceUp: false, found: false, character: 'Zoe Zebra' },
-  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=120&h=160&fit=crop', x: 20, y: 420, isFaceUp: false, found: false, character: 'Peppa Pig' },
-  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=120&h=160&fit=crop', x: 164, y: 420, isFaceUp: false, found: false, character: 'George Pig' },
-  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=120&h=160&fit=crop', x: 308, y: 420, isFaceUp: false, found: false, character: 'Daddy Pig' },
+  { id: uuidv4(), imgSrc: '/peppa.png', x: 20, y: 420, isFaceUp: false, found: false, character: 'Peppa Pig' },
+  { id: uuidv4(), imgSrc: '/george.png', x: 164, y: 420, isFaceUp: false, found: false, character: 'George Pig' },
+  { id: uuidv4(), imgSrc: '/daddy.png', x: 308, y: 420, isFaceUp: false, found: false, character: 'Daddy Pig' },
   { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=120&h=160&fit=crop', x: 452, y: 420, isFaceUp: false, found: false, character: 'Mummy Pig' },
   { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=120&h=160&fit=crop', x: 596, y: 420, isFaceUp: false, found: false, character: 'Grandpa Pig' },
   { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=120&h=160&fit=crop', x: 740, y: 420, isFaceUp: false, found: false, character: 'Granny Pig' },
@@ -147,10 +147,22 @@ async function checkForMismatchedPairs(ctx, flippedCardIds) {
         found: true
       }
     });
+    ctx.server.process({
+      type: 'cards/match'
+    });
   }
   $flippedCards.set([]);
 
 }
+
+// Handle card match actions
+server.type('cards/match', {
+  access: () => true,
+  process() { },
+  resend() {
+    return 'global';
+  }
+});
 
 // Handle card move actions
 server.type('card/move', {
