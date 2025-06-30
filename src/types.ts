@@ -39,3 +39,10 @@ export interface CardsLoadAction {
   type: 'cards/load';
   userId: string;
 }
+
+export interface CursorMoveAction {
+  type: 'cursor/move';
+  x: number;
+  y: number;
+  userId: string;
+}

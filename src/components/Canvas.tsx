@@ -1,11 +1,13 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect, useCallback } from 'react';
 import { useDrop } from 'react-dnd';
 import { useStore } from '@nanostores/react';
 import { Card } from './Card';
+import { Cursor } from './Cursor';
 import type { Card as CardType } from '../types';
 import { CustomDragLayer } from './CustomDragLayer';
-import { flipCard, moveCard } from '../logux';
+import { flipCard, moveCard, moveCursor } from '../logux';
 import { $cards } from '../stores/cards';
+import { $cursors } from '../stores/cursors';
 import {
   calculateScaleFactor,
   prepareCardsWithScale,
@@ -16,6 +18,7 @@ import {
 export const Canvas: React.FC = () => {
   const cardsMap = useStore($cards);
   const cards = Object.values(cardsMap);
+  const cursors = useStore($cursors);
   const [canvasWidth, setCanvasWidth] = useState(DEFAULT_CANVAS_WIDTH);
 
   const scaleFactor = useMemo(() =>
@@ -83,6 +86,16 @@ export const Canvas: React.FC = () => {
     moveCard({ cardId, x, y });
   };
 
+  const handleMouseMove = useCallback((event: React.MouseEvent) => {
+    const canvasRect = document.querySelector('[data-canvas]')?.getBoundingClientRect();
+    if (canvasRect) {
+      const x = event.clientX - canvasRect.left;
+      const y = event.clientY - canvasRect.top;
+      const normalized = normalizeCoordinates(x, y, scaleFactor);
+      moveCursor({ x: normalized.x, y: normalized.y });
+    }
+  }, [scaleFactor]);
+
   return (
     <div
       ref={drop}
@@ -98,7 +111,8 @@ export const Canvas: React.FC = () => {
 
       <div
         data-canvas
-        className='relative w-full h-full max-w-[860px] max-h-[820px]'>
+        className='relative w-full h-full max-w-[860px] max-h-[820px]'
+        onMouseMove={handleMouseMove}>
         {/* Cards */}
         {scaledCards.map(card => (
           <Card
@@ -111,6 +125,17 @@ export const Canvas: React.FC = () => {
         ))}
         {/* Custom drag layer for mobile preview */}
         <CustomDragLayer scaleFactor={scaleFactor} />
+
+        {/* Other users' cursors */}
+        {Object.values(cursors).map(cursor => (
+          <Cursor
+            key={cursor.userId}
+            x={cursor.x}
+            y={cursor.y}
+            userId={cursor.userId}
+            scaleFactor={scaleFactor}
+          />
+        ))}
 
       </div>
 

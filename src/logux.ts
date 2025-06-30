@@ -2,8 +2,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { CrossTabClient, badge, badgeEn, log } from '@logux/client'
 import { badgeStyles } from '@logux/client/badge/styles'
 import { $cards, flipCard as flipCardStore, moveCard as moveCardStore, moveUpdateStore } from './stores/cards';
-import type { Card, CardFlipAction, CardMoveAction, CardsLoadedAction, CardUpdateAction } from './types';
+import type { Card, CardFlipAction, CardMoveAction, CardsLoadedAction, CardUpdateAction, CursorMoveAction } from './types';
 import { playMatchSound } from './utils/sound';
+import { updateCursor } from './stores/cursors';
 
 const userId = uuidv4();
 
@@ -38,6 +39,12 @@ client.type('cards/match', () => {
   playMatchSound();
 });
 
+client.type<CursorMoveAction>('cursor/move', (action) => {
+  if (action.userId !== userId) {
+    updateCursor(action.userId, action.x, action.y);
+  }
+});
+
 export const flipCard = ({ cardId, isFaceUp }: { cardId: string; isFaceUp: boolean }) => {
   client.log.add({
     type: 'card/flip',
@@ -51,6 +58,15 @@ export const moveCard = ({ cardId, x, y }: { cardId: string, x: number, y: numbe
   client.log.add({
     type: 'card/move',
     cardId,
+    x,
+    y,
+    userId,
+  }, { sync: true });
+};
+
+export const moveCursor = ({ x, y }: { x: number, y: number }) => {
+  client.log.add({
+    type: 'cursor/move',
     x,
     y,
     userId,

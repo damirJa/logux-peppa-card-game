@@ -9,27 +9,27 @@ const INITIAL_CARDS = [
   { id: uuidv4(), imgSrc: '/peppa.png', x: 20, y: 20, isFaceUp: false, found: false, character: 'Peppa Pig' },
   { id: uuidv4(), imgSrc: '/george.png', x: 164, y: 20, isFaceUp: false, found: false, character: 'George Pig' },
   { id: uuidv4(), imgSrc: '/daddy.png', x: 308, y: 20, isFaceUp: false, found: false, character: 'Daddy Pig' },
-  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=120&h=160&fit=crop', x: 452, y: 20, isFaceUp: false, found: false, character: 'Mummy Pig' },
-  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=120&h=160&fit=crop', x: 596, y: 20, isFaceUp: false, found: false, character: 'Grandpa Pig' },
-  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=120&h=160&fit=crop', x: 740, y: 20, isFaceUp: false, found: false, character: 'Granny Pig' },
-  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=120&h=160&fit=crop', x: 20, y: 220, isFaceUp: false, found: false, character: 'Pedro Pony' },
-  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=120&h=160&fit=crop', x: 164, y: 220, isFaceUp: false, found: false, character: 'Suzy Sheep' },
-  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=120&h=160&fit=crop', x: 308, y: 220, isFaceUp: false, found: false, character: 'Rebecca Rabbit' },
-  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=120&h=160&fit=crop', x: 452, y: 220, isFaceUp: false, found: false, character: 'Candy Cat' },
-  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=120&h=160&fit=crop', x: 596, y: 220, isFaceUp: false, found: false, character: 'Danny Dog' },
-  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=120&h=160&fit=crop', x: 740, y: 220, isFaceUp: false, found: false, character: 'Zoe Zebra' },
+  { id: uuidv4(), imgSrc: '/mummy.png', x: 452, y: 20, isFaceUp: false, found: false, character: 'Mummy Pig' },
+  { id: uuidv4(), imgSrc: '/grandpa.png', x: 596, y: 20, isFaceUp: false, found: false, character: 'Grandpa Pig' },
+  { id: uuidv4(), imgSrc: '/granny.png', x: 740, y: 20, isFaceUp: false, found: false, character: 'Granny Pig' },
+  { id: uuidv4(), imgSrc: '/pedro.png', x: 20, y: 220, isFaceUp: false, found: false, character: 'Pedro Pony' },
+  { id: uuidv4(), imgSrc: '/suzy.png', x: 164, y: 220, isFaceUp: false, found: false, character: 'Suzy Sheep' },
+  { id: uuidv4(), imgSrc: '/rebecca.png', x: 308, y: 220, isFaceUp: false, found: false, character: 'Rebecca Rabbit' },
+  { id: uuidv4(), imgSrc: '/candy.png', x: 452, y: 220, isFaceUp: false, found: false, character: 'Candy Cat' },
+  { id: uuidv4(), imgSrc: '/danny.png', x: 596, y: 220, isFaceUp: false, found: false, character: 'Danny Dog' },
+  { id: uuidv4(), imgSrc: '/zoe.png', x: 740, y: 220, isFaceUp: false, found: false, character: 'Zoe Zebra' },
   { id: uuidv4(), imgSrc: '/peppa.png', x: 20, y: 420, isFaceUp: false, found: false, character: 'Peppa Pig' },
   { id: uuidv4(), imgSrc: '/george.png', x: 164, y: 420, isFaceUp: false, found: false, character: 'George Pig' },
   { id: uuidv4(), imgSrc: '/daddy.png', x: 308, y: 420, isFaceUp: false, found: false, character: 'Daddy Pig' },
-  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=120&h=160&fit=crop', x: 452, y: 420, isFaceUp: false, found: false, character: 'Mummy Pig' },
-  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=120&h=160&fit=crop', x: 596, y: 420, isFaceUp: false, found: false, character: 'Grandpa Pig' },
-  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=120&h=160&fit=crop', x: 740, y: 420, isFaceUp: false, found: false, character: 'Granny Pig' },
-  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=120&h=160&fit=crop', x: 20, y: 620, isFaceUp: false, found: false, character: 'Pedro Pony' },
-  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=120&h=160&fit=crop', x: 164, y: 620, isFaceUp: false, found: false, character: 'Suzy Sheep' },
-  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=120&h=160&fit=crop', x: 308, y: 620, isFaceUp: false, found: false, character: 'Rebecca Rabbit' },
-  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=120&h=160&fit=crop', x: 452, y: 620, isFaceUp: false, found: false, character: 'Candy Cat' },
-  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=120&h=160&fit=crop', x: 596, y: 620, isFaceUp: false, found: false, character: 'Danny Dog' },
-  { id: uuidv4(), imgSrc: 'https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=120&h=160&fit=crop', x: 740, y: 620, isFaceUp: false, found: false, character: 'Zoe Zebra' },
+  { id: uuidv4(), imgSrc: '/mummy.png', x: 452, y: 420, isFaceUp: false, found: false, character: 'Mummy Pig' },
+  { id: uuidv4(), imgSrc: '/grandpa.png', x: 596, y: 420, isFaceUp: false, found: false, character: 'Grandpa Pig' },
+  { id: uuidv4(), imgSrc: '/granny.png', x: 740, y: 420, isFaceUp: false, found: false, character: 'Granny Pig' },
+  { id: uuidv4(), imgSrc: '/pedro.png', x: 20, y: 620, isFaceUp: false, found: false, character: 'Pedro Pony' },
+  { id: uuidv4(), imgSrc: '/suzy.png', x: 164, y: 620, isFaceUp: false, found: false, character: 'Suzy Sheep' },
+  { id: uuidv4(), imgSrc: '/rebecca.png', x: 308, y: 620, isFaceUp: false, found: false, character: 'Rebecca Rabbit' },
+  { id: uuidv4(), imgSrc: '/candy.png', x: 452, y: 620, isFaceUp: false, found: false, character: 'Candy Cat' },
+  { id: uuidv4(), imgSrc: '/danny.png', x: 596, y: 620, isFaceUp: false, found: false, character: 'Danny Dog' },
+  { id: uuidv4(), imgSrc: '/zoe.png', x: 740, y: 620, isFaceUp: false, found: false, character: 'Zoe Zebra' },
 ];
 
 const cardsMap = {};
@@ -159,6 +159,17 @@ async function checkForMismatchedPairs(ctx, flippedCardIds) {
 server.type('cards/match', {
   access: () => true,
   process() { },
+  resend() {
+    return 'global';
+  }
+});
+
+// Handle cursor move actions
+server.type('cursor/move', {
+  access: () => true,
+  process() {
+    // This action is just a signal to clients, no server storage needed
+  },
   resend() {
     return 'global';
   }
