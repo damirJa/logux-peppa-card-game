@@ -25,8 +25,8 @@ export interface CardWithScaledCoords {
 }
 
 export const DEFAULT_CANVAS_WIDTH = 860;
-export const DEFAULT_CARD_WIDTH = 120;
-export const DEFAULT_CARD_HEIGHT = 160;
+export const DEFAULT_CARD_WIDTH = 100;
+export const DEFAULT_CARD_HEIGHT = 140;
 
 export function calculateScaleFactor(currentWidth: number, defaultWidth: number = DEFAULT_CANVAS_WIDTH): number {
   if (currentWidth >= defaultWidth) {

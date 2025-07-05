@@ -111,7 +111,7 @@ export const Canvas: React.FC = () => {
 
       <div
         data-canvas
-        className='relative w-full h-full max-w-[860px] max-h-[820px]'
+        className='relative w-full h-full max-w-[860px] max-h-[660px]'
         onMouseMove={handleMouseMove}>
         {/* Cards */}
         {scaledCards.map(card => (

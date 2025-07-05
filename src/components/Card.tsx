@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { useDrag } from 'react-dnd';
 import { cn } from '../lib/utils';
 import type { Card as CardType } from '../types';
+import { DEFAULT_CARD_HEIGHT, DEFAULT_CARD_WIDTH } from '../utils/canvas';
 
 interface CardProps {
   card: CardType & { scaledX?: number; scaledY?: number; scaledWidth?: number; scaledHeight?: number };
@@ -50,8 +51,8 @@ export const Card: React.FC<CardProps> = ({ card, onFlip, onMove, scaleFactor })
       style={{
         left: card.scaledX ?? card.x,
         top: card.scaledY ?? card.y,
-        width: card.scaledWidth ?? 120,
-        height: card.scaledHeight ?? 160,
+        width: card.scaledWidth ?? DEFAULT_CARD_WIDTH,
+        height: card.scaledHeight ?? DEFAULT_CARD_HEIGHT,
         perspective: '1000px',
       }}
       onClick={() => onFlip({ ...card, isFaceUp: !card.isFaceUp })}

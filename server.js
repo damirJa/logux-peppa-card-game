@@ -6,30 +6,45 @@ const $serverCards = map({});
 const $flippedCards = atom([]);
 
 const INITIAL_CARDS = [
-  { id: uuidv4(), imgSrc: '/peppa.png', x: 20, y: 20, isFaceUp: false, found: false, character: 'Peppa Pig' },
-  { id: uuidv4(), imgSrc: '/george.png', x: 164, y: 20, isFaceUp: false, found: false, character: 'George Pig' },
-  { id: uuidv4(), imgSrc: '/daddy.png', x: 308, y: 20, isFaceUp: false, found: false, character: 'Daddy Pig' },
-  { id: uuidv4(), imgSrc: '/mummy.png', x: 452, y: 20, isFaceUp: false, found: false, character: 'Mummy Pig' },
-  { id: uuidv4(), imgSrc: '/grandpa.png', x: 596, y: 20, isFaceUp: false, found: false, character: 'Grandpa Pig' },
-  { id: uuidv4(), imgSrc: '/granny.png', x: 740, y: 20, isFaceUp: false, found: false, character: 'Granny Pig' },
-  { id: uuidv4(), imgSrc: '/pedro.png', x: 20, y: 220, isFaceUp: false, found: false, character: 'Pedro Pony' },
-  { id: uuidv4(), imgSrc: '/suzy.png', x: 164, y: 220, isFaceUp: false, found: false, character: 'Suzy Sheep' },
-  { id: uuidv4(), imgSrc: '/rebecca.png', x: 308, y: 220, isFaceUp: false, found: false, character: 'Rebecca Rabbit' },
-  { id: uuidv4(), imgSrc: '/candy.png', x: 452, y: 220, isFaceUp: false, found: false, character: 'Candy Cat' },
-  { id: uuidv4(), imgSrc: '/danny.png', x: 596, y: 220, isFaceUp: false, found: false, character: 'Danny Dog' },
-  { id: uuidv4(), imgSrc: '/zoe.png', x: 740, y: 220, isFaceUp: false, found: false, character: 'Zoe Zebra' },
-  { id: uuidv4(), imgSrc: '/peppa.png', x: 20, y: 420, isFaceUp: false, found: false, character: 'Peppa Pig' },
-  { id: uuidv4(), imgSrc: '/george.png', x: 164, y: 420, isFaceUp: false, found: false, character: 'George Pig' },
-  { id: uuidv4(), imgSrc: '/daddy.png', x: 308, y: 420, isFaceUp: false, found: false, character: 'Daddy Pig' },
-  { id: uuidv4(), imgSrc: '/mummy.png', x: 452, y: 420, isFaceUp: false, found: false, character: 'Mummy Pig' },
-  { id: uuidv4(), imgSrc: '/grandpa.png', x: 596, y: 420, isFaceUp: false, found: false, character: 'Grandpa Pig' },
-  { id: uuidv4(), imgSrc: '/granny.png', x: 740, y: 420, isFaceUp: false, found: false, character: 'Granny Pig' },
-  { id: uuidv4(), imgSrc: '/pedro.png', x: 20, y: 620, isFaceUp: false, found: false, character: 'Pedro Pony' },
-  { id: uuidv4(), imgSrc: '/suzy.png', x: 164, y: 620, isFaceUp: false, found: false, character: 'Suzy Sheep' },
-  { id: uuidv4(), imgSrc: '/rebecca.png', x: 308, y: 620, isFaceUp: false, found: false, character: 'Rebecca Rabbit' },
-  { id: uuidv4(), imgSrc: '/candy.png', x: 452, y: 620, isFaceUp: false, found: false, character: 'Candy Cat' },
-  { id: uuidv4(), imgSrc: '/danny.png', x: 596, y: 620, isFaceUp: false, found: false, character: 'Danny Dog' },
-  { id: uuidv4(), imgSrc: '/zoe.png', x: 740, y: 620, isFaceUp: false, found: false, character: 'Zoe Zebra' },
+  // Row 1
+  { id: uuidv4(), imgSrc: '/peppa.webp', x: 20, y: 20, isFaceUp: false, found: false, character: 'Peppa Pig' },
+  { id: uuidv4(), imgSrc: '/george.webp', x: 125, y: 20, isFaceUp: false, found: false, character: 'George Pig' },
+  { id: uuidv4(), imgSrc: '/danny.webp', x: 230, y: 20, isFaceUp: false, found: false, character: 'Danny Dog' },
+  { id: uuidv4(), imgSrc: '/suzy.webp', x: 335, y: 20, isFaceUp: false, found: false, character: 'Suzy Sheep' },
+  { id: uuidv4(), imgSrc: '/rebecca.webp', x: 440, y: 20, isFaceUp: false, found: false, character: 'Rebecca Rabbit' },
+  { id: uuidv4(), imgSrc: '/pedro.webp', x: 545, y: 20, isFaceUp: false, found: false, character: 'Pedro Pony' },
+  { id: uuidv4(), imgSrc: '/zoe.webp', x: 650, y: 20, isFaceUp: false, found: false, character: 'Zoe Zebra' },
+  { id: uuidv4(), imgSrc: '/wendy.webp', x: 755, y: 20, isFaceUp: false, found: false, character: 'Wendy Wolf' },
+
+  // Row 2
+  { id: uuidv4(), imgSrc: '/daddy.webp', x: 20, y: 170, isFaceUp: false, found: false, character: 'Daddy Pig' },
+  { id: uuidv4(), imgSrc: '/mummy.webp', x: 125, y: 170, isFaceUp: false, found: false, character: 'Mummy Pig' },
+  { id: uuidv4(), imgSrc: '/grandpa.webp', x: 230, y: 170, isFaceUp: false, found: false, character: 'Grandpa Pig' },
+  { id: uuidv4(), imgSrc: '/granny.webp', x: 335, y: 170, isFaceUp: false, found: false, character: 'Granny Pig' },
+  { id: uuidv4(), imgSrc: '/freddy.webp', x: 440, y: 170, isFaceUp: false, found: false, character: 'Freddy Fox' },
+  { id: uuidv4(), imgSrc: '/candy.webp', x: 545, y: 170, isFaceUp: false, found: false, character: 'Candy Cat' },
+  { id: uuidv4(), imgSrc: '/gazelle.webp', x: 650, y: 170, isFaceUp: false, found: false, character: 'Madame Gazelle' },
+  { id: uuidv4(), imgSrc: '/mandy.webp', x: 755, y: 170, isFaceUp: false, found: false, character: 'Mandy Mouse' },
+
+  // Row 3
+  { id: uuidv4(), imgSrc: '/rebecca.webp', x: 20, y: 320, isFaceUp: false, found: false, character: 'Rebecca Rabbit' },
+  { id: uuidv4(), imgSrc: '/suzy.webp', x: 125, y: 320, isFaceUp: false, found: false, character: 'Suzy Sheep' },
+  { id: uuidv4(), imgSrc: '/daddy.webp', x: 230, y: 320, isFaceUp: false, found: false, character: 'Daddy Pig' },
+  { id: uuidv4(), imgSrc: '/grandpa.webp', x: 335, y: 320, isFaceUp: false, found: false, character: 'Grandpa Pig' },
+  { id: uuidv4(), imgSrc: '/peppa.webp', x: 440, y: 320, isFaceUp: false, found: false, character: 'Peppa Pig' },
+  { id: uuidv4(), imgSrc: '/mandy.webp', x: 545, y: 320, isFaceUp: false, found: false, character: 'Mandy Mouse' },
+  { id: uuidv4(), imgSrc: '/freddy.webp', x: 650, y: 320, isFaceUp: false, found: false, character: 'Freddy Fox' },
+  { id: uuidv4(), imgSrc: '/danny.webp', x: 755, y: 320, isFaceUp: false, found: false, character: 'Danny Dog' },
+
+  // Row 4
+  { id: uuidv4(), imgSrc: '/mummy.webp', x: 20, y: 470, isFaceUp: false, found: false, character: 'Mummy Pig' },
+  { id: uuidv4(), imgSrc: '/pedro.webp', x: 125, y: 470, isFaceUp: false, found: false, character: 'Pedro Pony' },
+  { id: uuidv4(), imgSrc: '/granny.webp', x: 230, y: 470, isFaceUp: false, found: false, character: 'Granny Pig' },
+  { id: uuidv4(), imgSrc: '/candy.webp', x: 335, y: 470, isFaceUp: false, found: false, character: 'Candy Cat' },
+  { id: uuidv4(), imgSrc: '/zoe.webp', x: 440, y: 470, isFaceUp: false, found: false, character: 'Zoe Zebra' },
+  { id: uuidv4(), imgSrc: '/george.webp', x: 545, y: 470, isFaceUp: false, found: false, character: 'George Pig' },
+  { id: uuidv4(), imgSrc: '/wendy.webp', x: 650, y: 470, isFaceUp: false, found: false, character: 'Wendy Wolf' },
+  { id: uuidv4(), imgSrc: '/gazelle.webp', x: 755, y: 470, isFaceUp: false, found: false, character: 'Madame Gazelle' },
 ];
 
 const cardsMap = {};
