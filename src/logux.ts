@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { CrossTabClient, badge, badgeEn, log } from '@logux/client'
 import { badgeStyles } from '@logux/client/badge/styles'
 import { $cards, flipCard as flipCardStore, moveCard as moveCardStore, moveUpdateStore } from './stores/cards';
-import type { Card, CardFlipAction, CardMoveAction, CardsLoadedAction, CardUpdateAction, CursorMoveAction } from './types';
+import type { Card, CardFlipAction, CardMoveAction, CardsLoadedAction, CardUpdateAction, CursorMoveAction, CardsShuffleAction } from './types';
 import { playMatchSound } from './utils/sound';
 import { updateCursor } from './stores/cursors';
 
@@ -69,6 +69,13 @@ export const moveCursor = ({ x, y }: { x: number, y: number }) => {
     type: 'cursor/move',
     x,
     y,
+    userId,
+  }, { sync: true });
+};
+
+export const shuffleCards = () => {
+  client.log.add({
+    type: 'cards/shuffle',
     userId,
   }, { sync: true });
 };

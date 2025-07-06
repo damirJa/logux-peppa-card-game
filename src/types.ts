@@ -46,3 +46,8 @@ export interface CursorMoveAction {
   y: number;
   userId: string;
 }
+
+export interface CardsShuffleAction {
+  type: 'cards/shuffle';
+  userId: string;
+}

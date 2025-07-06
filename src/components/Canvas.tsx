@@ -5,7 +5,7 @@ import { Card } from './Card';
 import { Cursor } from './Cursor';
 import type { Card as CardType } from '../types';
 import { CustomDragLayer } from './CustomDragLayer';
-import { flipCard, moveCard, moveCursor } from '../logux';
+import { flipCard, moveCard, moveCursor, shuffleCards } from '../logux';
 import { $cards } from '../stores/cards';
 import { $cursors } from '../stores/cursors';
 import {
@@ -30,6 +30,10 @@ export const Canvas: React.FC = () => {
     prepareCardsWithScale(cards, scaleFactor),
     [cards, scaleFactor]
   );
+
+  const allPairsFound = useMemo(() => {
+    return cards.length > 0 && cards.every(card => card.found);
+  }, [cards]);
 
   useEffect(() => {
     const updateCanvasWidth = () => {
@@ -96,6 +100,10 @@ export const Canvas: React.FC = () => {
     }
   }, [scaleFactor]);
 
+  const handleShuffle = () => {
+    shuffleCards();
+  };
+
   return (
     <div
       ref={drop}
@@ -136,6 +144,22 @@ export const Canvas: React.FC = () => {
             scaleFactor={scaleFactor}
           />
         ))}
+
+        {/* Shuffle button - appears when all pairs are found */}
+        {allPairsFound && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="bg-white p-8 rounded-2xl shadow-2xl text-center">
+              <h2 className="text-2xl font-bold text-gray-800 mb-4">🎉 Congratulations!</h2>
+              <p className="text-gray-600 mb-6">You found all pairs!</p>
+              <button
+                onClick={handleShuffle}
+                className="cursor-pointer bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold py-3 px-8 rounded-full text-lg hover:from-purple-600 hover:to-pink-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+              >
+                🔄 Shuffle & Play Again
+              </button>
+            </div>
+          </div>
+        )}
 
       </div>
 

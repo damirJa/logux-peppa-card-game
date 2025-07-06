@@ -53,6 +53,38 @@ INITIAL_CARDS.forEach(card => {
 });
 $serverCards.set(cardsMap);
 
+// Shuffle function to randomize card positions and reset game state
+function shuffleCardPositions() {
+  const currentCards = $serverCards.get();
+  const cardsArray = Object.values(currentCards);
+
+  // Extract all current positions
+  const positions = cardsArray.map(card => ({ x: card.x, y: card.y }));
+
+  // Fisher-Yates shuffle algorithm
+  for (let i = positions.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [positions[i], positions[j]] = [positions[j], positions[i]];
+  }
+
+  // Update cards with shuffled positions and reset game state
+  const updatedCards = {};
+  cardsArray.forEach((card, index) => {
+    updatedCards[card.id] = {
+      ...card,
+      x: positions[index].x,
+      y: positions[index].y,
+      isFaceUp: false,
+      found: false,
+    };
+  });
+
+  $serverCards.set(updatedCards);
+  // Clear any flipped cards tracking
+  $flippedCards.set([]);
+  return updatedCards;
+}
+
 const server = new Server(
   Server.loadOptions(process, {
     subprotocol: '1.0.0',
@@ -152,14 +184,14 @@ async function checkForMismatchedPairs(ctx, flippedCardIds) {
       type: 'card/update',
       card: {
         ...card1,
-        found: true
+        found: false
       }
     });
     ctx.server.process({
       type: 'card/update',
       card: {
         ...card2,
-        found: true
+        found: false
       }
     });
     ctx.server.process({
@@ -190,6 +222,15 @@ server.type('cursor/move', {
   }
 });
 
+server.type('cards/loaded', {
+  access: () => true,
+  process() {
+  },
+  resend() {
+    return 'global';
+  }
+});
+
 // Handle card move actions
 server.type('card/move', {
   access: () => true,
@@ -207,6 +248,18 @@ server.type('card/move', {
   },
   resend(ctx, action, meta) {
     return 'global';
+  },
+});
+
+server.type('cards/shuffle', {
+  access: () => true,
+  process(ctx) {
+    const shuffledCards = shuffleCardPositions();
+    const cardsArray = Object.values(shuffledCards);
+    ctx.server.process({
+      type: 'cards/loaded',
+      cards: cardsArray
+    })
   },
 });
 
