@@ -184,14 +184,14 @@ async function checkForMismatchedPairs(ctx, flippedCardIds) {
       type: 'card/update',
       card: {
         ...card1,
-        found: false
+        found: true
       }
     });
     ctx.server.process({
       type: 'card/update',
       card: {
         ...card2,
-        found: false
+        found: true
       }
     });
     ctx.server.process({
